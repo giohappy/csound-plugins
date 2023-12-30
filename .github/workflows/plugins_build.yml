@@ -21,11 +21,11 @@ jobs:
 
     strategy:
       matrix:
-        os: [windows-latest]
+        os: [windows-latest, ubuntu-latest]
         version: ["6.17.0"]
         include:
-          # - os: "windows-latest"
-          #   mono: ""
+          - os: "windows-latest"
+            mono: ""
           - os: "ubuntu-latest"
             mono: "mono"
           # - os: "macos-latest"
@@ -82,11 +82,7 @@ jobs:
             -source "https://nuget.pkg.github.com/csound/index.json"
 
       - name: Generate CMake build
-        run: |
-          cmake -B build -DUSE_VCPKG=1
-          cat ./home/runner/work/plugins/plugins/vcpkg/buildtrees/fltk/config-x64-linux-dbg-CMakeCache.txt.log
-          cat ./home/runner/work/plugins/plugins/vcpkg/buildtrees/fltk/config-x64-linux-rel-CMakeCache.txt.log
-          cat ./home/runner/work/plugins/plugins/vcpkg/buildtrees/fltk/config-x64-linux-out.log
+        run: cmake -B build -DUSE_VCPKG=1
 
       - name: Build plugins
         run: cmake --build build --config Release
