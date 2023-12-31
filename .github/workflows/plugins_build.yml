@@ -79,7 +79,11 @@ jobs:
             -source "https://nuget.pkg.github.com/csound/index.json"
 
       - name: Generate CMake build
-        run: cmake -B build -DUSE_VCPKG=1
+        run: |
+          cmake -B build -DUSE_VCPKG=1
+          echo "Logging"
+          cat ./home/runner/work/plugins/plugins/vcpkg/buildtrees/fltk/config-x64-linux-out.log
+          cat ./home/runner/work/plugins/plugins/build/vcpkg-manifest-install.log
 
       - name: Build plugins
         run: cmake --build build --config Release
