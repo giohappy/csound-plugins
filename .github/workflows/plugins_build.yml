@@ -63,26 +63,11 @@ jobs:
         #     ./vcpkg/bootstrap-vcpkg.sh
         #     brew install csound
 
-      # - name: Setup VCPKG cache
-      #   shell: bash
-      #   run: |
-      #     ${{ matrix.mono }} `./vcpkg/vcpkg fetch nuget | tail -n 1` \
-      #     sources add \
-      #     -source "https://nuget.pkg.github.com/csound/index.json" \
-      #     -storepasswordincleartext \
-      #     -name "GitHub" \
-      #     -username "csound" \
-      #     -password "${{ secrets.GITHUB_TOKEN }}"
-      #     ${{ matrix.mono }} `./vcpkg/vcpkg fetch nuget | tail -n 1` \
-      #       setapikey "${{ secrets.GITHUB_TOKEN }}" \
-      #       -source "https://nuget.pkg.github.com/csound/index.json"
-
       - name: VCPKG cache
-        uses: lukka/run-vcpkg@v11 # Always specify the specific _version_ of the
+        uses: lukka/run-vcpkg@v11
 
       - name: Generate CMake build
-        run: |
-          cmake -B build -DUSE_VCPKG=1
+        run: cmake -B build -DUSE_VCPKG=1
 
       - name: Build plugins
         run: cmake --build build --config Release
